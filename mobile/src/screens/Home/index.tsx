@@ -42,7 +42,7 @@ export function Home() {
         <HomeTitle>Cartões</HomeTitle>
         <Shadow
           style={{ borderRadius: 10, width: 45, height: 45 }}
-          distance={20}
+          distance={16}
           startColor="#00000009"
           endColor={theme.white}
         >

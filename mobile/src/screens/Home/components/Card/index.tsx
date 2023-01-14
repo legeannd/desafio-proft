@@ -19,8 +19,12 @@ interface CardProps {
 }
 
 export function Card({ data }: CardProps) {
+  const ratio = 10 / 16
+
   const width = Dimensions.get('window').width - 48
-  const height = 200
+  const height = width * ratio
+
+  console.log(width, height)
 
   return (
     <Canvas style={{ flex: 1, width, height }}>
