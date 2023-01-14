@@ -11,6 +11,7 @@ import {
 } from '@expo-google-fonts/raleway'
 import { StatusBar } from 'react-native'
 import { Routes } from './src/routes'
+import { Loading } from './src/components/Loading'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -28,7 +29,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded && <Routes />}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </>
   )
 }
