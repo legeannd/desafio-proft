@@ -1,20 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+/* eslint-disable camelcase */
+import {
+  useFonts,
+  Roboto_400Regular,
+  Roboto_700Bold,
+} from '@expo-google-fonts/roboto'
+import {
+  Raleway_500Medium,
+  Raleway_600SemiBold,
+  Raleway_700Bold,
+} from '@expo-google-fonts/raleway'
+import { StatusBar } from 'react-native'
+import { Routes } from './src/routes'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Hello World</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Roboto_700Bold,
+    Raleway_500Medium,
+    Raleway_600SemiBold,
+    Raleway_700Bold,
+  })
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  return (
+    <>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+      {fontsLoaded && <Routes />}
+    </>
+  )
+}
