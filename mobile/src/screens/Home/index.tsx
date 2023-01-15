@@ -1,4 +1,5 @@
 import { Octicons } from '@expo/vector-icons/'
+import { useCallback, useState } from 'react'
 import { ListRenderItem, View } from 'react-native'
 import { Shadow } from 'react-native-shadow-2'
 import { theme } from '../../themes'
@@ -12,6 +13,8 @@ import {
 } from './styles'
 
 export function Home() {
+  const [visibleCard, setVisibleCard] = useState(0)
+
   const renderItem: ListRenderItem<CardData> = ({ item }) => (
     <Card data={item} />
   )
@@ -35,6 +38,13 @@ export function Home() {
       cardNumber: '1234 1234 1234 1234',
     },
   ]
+
+  const onViewableItemsChanged = useCallback(({ viewableItems }) => {
+    if (viewableItems.length !== 0 && viewableItems[0].isViewable) {
+      console.log(viewableItems[0].index)
+      setVisibleCard(viewableItems[0].index)
+    }
+  }, [])
 
   return (
     <HomeContainer>
@@ -62,7 +72,12 @@ export function Home() {
           paddingRight: 24,
         }}
         ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 60,
+        }}
       />
+      <HomeTitle>{visibleCard}</HomeTitle>
     </HomeContainer>
   )
 }
