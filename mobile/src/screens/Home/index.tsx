@@ -56,7 +56,11 @@ export function Home() {
         renderItem={renderItem}
         keyExtractor={(item: CardData) => item.name}
         horizontal
-        contentContainerStyle={{ paddingLeft: 24, paddingRight: 24 }}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingLeft: 24,
+          paddingRight: 24,
+        }}
         ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
       />
     </HomeContainer>

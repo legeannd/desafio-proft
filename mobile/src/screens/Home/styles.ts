@@ -32,4 +32,5 @@ export const HomeTitle = styled.Text`
 
 export const CardsList = styled(FlatList<CardData>)`
   margin-top: 32px;
+  flex-grow: 0;
 `
