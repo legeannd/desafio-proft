@@ -6,13 +6,13 @@ import {
   useFont,
   Text,
 } from '@shopify/react-native-skia'
-import { Dimensions } from 'react-native'
-import { theme } from '../../../../themes'
+import { Dimensions, View } from 'react-native'
+import { theme } from '../../themes'
 
-import RalewayBold from '../../../../assets/fonts/Raleway-Bold.ttf'
-import RalewayMedium from '../../../../assets/fonts/Raleway-Medium.ttf'
-import RobotoBold from '../../../../assets/fonts/Roboto-Bold.ttf'
-import { Loading } from '../../../../components/Loading'
+import RalewayBold from '../../assets/fonts/Raleway-Bold.ttf'
+import RalewayMedium from '../../assets/fonts/Raleway-Medium.ttf'
+import RobotoBold from '../../assets/fonts/Roboto-Bold.ttf'
+import { Loading } from '../Loading'
 
 export interface CardData {
   name: string
@@ -30,18 +30,22 @@ export function Card({ data }: CardProps) {
   const ralewayMediumFont = useFont(RalewayMedium, 16)
   const robotoBoldFont = useFont(RobotoBold, 20)
 
+  const ratio = 10 / 16
+
+  const width = Dimensions.get('window').width - 48
+  const height = width * ratio
+
   if (
     ralewayBoldFont === null ||
     ralewayMediumFont === null ||
     robotoBoldFont === null
   ) {
-    return <Loading />
+    return (
+      <View style={{ width, height }}>
+        <Loading />
+      </View>
+    )
   }
-
-  const ratio = 10 / 16
-
-  const width = Dimensions.get('window').width - 48
-  const height = width * ratio
 
   return (
     <Canvas style={{ width, height }}>
