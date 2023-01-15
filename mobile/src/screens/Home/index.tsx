@@ -1,10 +1,15 @@
-import { Octicons } from '@expo/vector-icons/'
+import { Octicons, Ionicons } from '@expo/vector-icons/'
 import { useCallback, useState } from 'react'
 import { ListRenderItem, View, ViewToken } from 'react-native'
 import { Shadow } from 'react-native-shadow-2'
 import { theme } from '../../themes'
 import { Card, CardData } from '../../components/Card'
 import {
+  ActionButton,
+  ActionButtonText,
+  ActionsContainer,
+  ActionsSpacingContainer,
+  ActionsText,
   AddCardButton,
   CardsList,
   HeaderContainer,
@@ -87,6 +92,38 @@ export function Home() {
         }}
       />
       <Indicator size={cards.length} currentIndex={visibleCardIndex} />
+      <ActionsContainer>
+        <ActionsText>Ações</ActionsText>
+        <Shadow
+          style={{ borderRadius: 10, width: '100%' }}
+          distance={8}
+          startColor="#00000009"
+          endColor={theme.white}
+        >
+          <ActionButton>
+            <Ionicons
+              name="eye-outline"
+              size={24}
+              color={theme['action-text']}
+            />
+            <ActionButtonText>Esconder número</ActionButtonText>
+          </ActionButton>
+        </Shadow>
+        <ActionsSpacingContainer />
+        <Shadow
+          style={{ borderRadius: 10, width: '100%' }}
+          distance={8}
+          startColor="#00000009"
+          endColor={theme.white}
+        >
+          <ActionButton>
+            <Ionicons name="trash-outline" size={24} color={theme.red} />
+            <ActionButtonText style={{ color: theme.red }}>
+              Apagar cartão
+            </ActionButtonText>
+          </ActionButton>
+        </Shadow>
+      </ActionsContainer>
     </HomeContainer>
   )
 }
