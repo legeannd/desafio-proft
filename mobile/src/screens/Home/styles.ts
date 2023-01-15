@@ -2,7 +2,7 @@ import styled from 'styled-components/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { theme } from '../../themes'
 import { FlatList } from 'react-native'
-import { CardData } from './components/Card'
+import { CardData } from '../../components/Card'
 
 export const HomeContainer = styled(SafeAreaView)`
   flex: 1;

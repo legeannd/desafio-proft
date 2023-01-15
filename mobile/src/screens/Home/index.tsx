@@ -1,9 +1,9 @@
 import { Octicons } from '@expo/vector-icons/'
 import { useCallback, useState } from 'react'
-import { ListRenderItem, View } from 'react-native'
+import { ListRenderItem, View, ViewToken } from 'react-native'
 import { Shadow } from 'react-native-shadow-2'
 import { theme } from '../../themes'
-import { Card, CardData } from './components/Card'
+import { Card, CardData } from '../../components/Card'
 import {
   AddCardButton,
   CardsList,
@@ -11,9 +11,15 @@ import {
   HomeContainer,
   HomeTitle,
 } from './styles'
+import { Indicator } from './components/Indicator'
+
+type onViewableItemsChangedType = (info: {
+  viewableItems: ViewToken[]
+  changed: ViewToken[]
+}) => void
 
 export function Home() {
-  const [visibleCard, setVisibleCard] = useState(0)
+  const [visibleCardIndex, setVisibleCardIndex] = useState(0)
 
   const renderItem: ListRenderItem<CardData> = ({ item }) => (
     <Card data={item} />
@@ -39,12 +45,15 @@ export function Home() {
     },
   ]
 
-  const onViewableItemsChanged = useCallback(({ viewableItems }) => {
-    if (viewableItems.length !== 0 && viewableItems[0].isViewable) {
-      console.log(viewableItems[0].index)
-      setVisibleCard(viewableItems[0].index)
-    }
-  }, [])
+  const onViewableItemsChanged = useCallback<onViewableItemsChangedType>(
+    ({ viewableItems }) => {
+      if (viewableItems.length !== 0) {
+        const index = viewableItems[0].index
+        index !== null && index >= 0 && setVisibleCardIndex(index)
+      }
+    },
+    [],
+  )
 
   return (
     <HomeContainer>
@@ -77,7 +86,7 @@ export function Home() {
           itemVisiblePercentThreshold: 60,
         }}
       />
-      <HomeTitle>{visibleCard}</HomeTitle>
+      <Indicator size={cards.length} currentIndex={visibleCardIndex} />
     </HomeContainer>
   )
 }
