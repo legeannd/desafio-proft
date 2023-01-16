@@ -131,7 +131,7 @@ export function Home() {
             {cardNumberHiddenIndex.includes(visibleCardIndex) ? (
               <>
                 <Ionicons
-                  name="eye-off-outline"
+                  name="eye-outline"
                   size={24}
                   color={theme['action-text']}
                 />
@@ -140,7 +140,7 @@ export function Home() {
             ) : (
               <>
                 <Ionicons
-                  name="eye-outline"
+                  name="eye-off-outline"
                   size={24}
                   color={theme['action-text']}
                 />
