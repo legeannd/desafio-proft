@@ -5,6 +5,7 @@ import {
   vec,
   useFont,
   Text,
+  Blur,
 } from '@shopify/react-native-skia'
 import { Dimensions, View } from 'react-native'
 import { theme } from '../../themes'
@@ -15,6 +16,7 @@ import RobotoBold from '../../assets/fonts/Roboto-Bold.ttf'
 import { Loading } from '../Loading'
 
 export interface CardData {
+  id: string
   name: string
   flag: string
   ownerName: string
@@ -23,9 +25,10 @@ export interface CardData {
 
 interface CardProps {
   data: CardData
+  isCardNumberHidden: boolean
 }
 
-export function Card({ data }: CardProps) {
+export function Card({ data, isCardNumberHidden }: CardProps) {
   const ralewayBoldFont = useFont(RalewayBold, 20)
   const ralewayMediumFont = useFont(RalewayMedium, 16)
   const robotoBoldFont = useFont(RobotoBold, 20)
@@ -82,7 +85,9 @@ export function Card({ data }: CardProps) {
         text={data.cardNumber}
         font={robotoBoldFont}
         color={theme.white}
-      />
+      >
+        {isCardNumberHidden && <Blur blur={5} />}
+      </Text>
     </Canvas>
   )
 }

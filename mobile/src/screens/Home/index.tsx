@@ -25,24 +25,33 @@ type onViewableItemsChangedType = (info: {
 
 export function Home() {
   const [visibleCardIndex, setVisibleCardIndex] = useState(0)
+  const [cardNumberHiddenIndex, setCardNumberHiddenIndex] = useState<Number[]>(
+    [],
+  )
 
-  const renderItem: ListRenderItem<CardData> = ({ item }) => (
-    <Card data={item} />
+  const renderItem: ListRenderItem<CardData> = ({ item, index }) => (
+    <Card
+      data={item}
+      isCardNumberHidden={cardNumberHiddenIndex.includes(index)}
+    />
   )
   const cards = [
     {
+      id: '1',
       name: 'Nome do cartão',
       flag: 'Bandeira',
       ownerName: 'Nome completo',
       cardNumber: '1234 1234 1234 1234',
     },
     {
+      id: '2',
       name: 'Nome do cartão 2',
       flag: 'Bandeira',
       ownerName: 'Nome completo',
       cardNumber: '1234 1234 1234 1234',
     },
     {
+      id: '3',
       name: 'Nome do cartão 3',
       flag: 'Bandeira',
       ownerName: 'Nome completo',
@@ -59,6 +68,17 @@ export function Home() {
     },
     [],
   )
+
+  function handleHideCardNumber() {
+    if (cardNumberHiddenIndex.includes(visibleCardIndex)) {
+      const newCardNumberHiddenIndex = cardNumberHiddenIndex.filter(
+        (index) => index !== visibleCardIndex,
+      )
+      setCardNumberHiddenIndex(newCardNumberHiddenIndex)
+    } else {
+      setCardNumberHiddenIndex((value) => [...value, visibleCardIndex])
+    }
+  }
 
   return (
     <HomeContainer>
@@ -78,7 +98,7 @@ export function Home() {
       <CardsList
         data={cards}
         renderItem={renderItem}
-        keyExtractor={(item: CardData) => item.name}
+        keyExtractor={(item: CardData) => item.id}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
@@ -100,13 +120,26 @@ export function Home() {
           startColor="#00000009"
           endColor={theme.white}
         >
-          <ActionButton>
-            <Ionicons
-              name="eye-outline"
-              size={24}
-              color={theme['action-text']}
-            />
-            <ActionButtonText>Esconder número</ActionButtonText>
+          <ActionButton onPress={handleHideCardNumber}>
+            {cardNumberHiddenIndex.includes(visibleCardIndex) ? (
+              <>
+                <Ionicons
+                  name="eye-off-outline"
+                  size={24}
+                  color={theme['action-text']}
+                />
+                <ActionButtonText>Mostrar número</ActionButtonText>
+              </>
+            ) : (
+              <>
+                <Ionicons
+                  name="eye-outline"
+                  size={24}
+                  color={theme['action-text']}
+                />
+                <ActionButtonText>Esconder número</ActionButtonText>
+              </>
+            )}
           </ActionButton>
         </Shadow>
         <ActionsSpacingContainer />
