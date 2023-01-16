@@ -17,6 +17,7 @@ import {
   HomeTitle,
 } from './styles'
 import { Indicator } from './components/Indicator'
+import { useNavigation } from '@react-navigation/native'
 
 type onViewableItemsChangedType = (info: {
   viewableItems: ViewToken[]
@@ -28,6 +29,8 @@ export function Home() {
   const [cardNumberHiddenIndex, setCardNumberHiddenIndex] = useState<Number[]>(
     [],
   )
+
+  const navigation = useNavigation()
 
   const renderItem: ListRenderItem<CardData> = ({ item, index }) => (
     <Card
@@ -80,6 +83,10 @@ export function Home() {
     }
   }
 
+  function handleNavigateToAddCard() {
+    navigation.navigate('addCard')
+  }
+
   return (
     <HomeContainer>
       <HeaderContainer>
@@ -90,7 +97,7 @@ export function Home() {
           startColor="#00000009"
           endColor={theme.white}
         >
-          <AddCardButton>
+          <AddCardButton onPress={handleNavigateToAddCard}>
             <Octicons name="plus" size={20} />
           </AddCardButton>
         </Shadow>
