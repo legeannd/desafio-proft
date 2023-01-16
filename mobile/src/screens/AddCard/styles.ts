@@ -36,8 +36,13 @@ export const Label = styled.Text`
   margin-bottom: 6px;
 `
 
-export const Input = styled.TextInput`
-  border: 1px solid ${theme['gray-100']};
+interface InputProps {
+  hasError: boolean
+}
+
+export const Input = styled.TextInput<InputProps>`
+  border: 1px solid
+    ${(props) => (props.hasError ? theme.red : theme['gray-100'])};
   border-radius: 6px;
   font-family: 'Roboto_400Regular';
   font-size: 16px;
