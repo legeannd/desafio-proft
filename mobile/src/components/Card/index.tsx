@@ -25,10 +25,10 @@ export interface CardData {
 
 interface CardProps {
   data: CardData
-  isCardNumberHidden: boolean
+  isCardNumberHidden?: boolean
 }
 
-export function Card({ data, isCardNumberHidden }: CardProps) {
+export function Card({ data, isCardNumberHidden = false }: CardProps) {
   const ralewayBoldFont = useFont(RalewayBold, 20)
   const ralewayMediumFont = useFont(RalewayMedium, 16)
   const robotoBoldFont = useFont(RobotoBold, 20)
