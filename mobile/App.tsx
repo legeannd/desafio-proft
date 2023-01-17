@@ -10,8 +10,10 @@ import {
   Raleway_700Bold,
 } from '@expo-google-fonts/raleway'
 import { StatusBar } from 'react-native'
+import { Provider } from 'react-redux'
 import { Routes } from './src/routes'
 import { Loading } from './src/components/Loading'
+import store from './src/redux/store'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,13 +25,13 @@ export default function App() {
   })
 
   return (
-    <>
+    <Provider store={store}>
       <StatusBar
         barStyle="dark-content"
         backgroundColor="transparent"
         translucent
       />
       {fontsLoaded ? <Routes /> : <Loading />}
-    </>
+    </Provider>
   )
 }

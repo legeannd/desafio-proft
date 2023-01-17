@@ -1,8 +1,7 @@
-import { useNavigation } from '@react-navigation/native'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { KeyboardAvoidingView, Platform } from 'react-native'
-import { Card } from '../../components/Card'
+import { Card, CardData } from '../../components/Card'
 import {
   AddCardButton,
   AddCardButtonText,
@@ -15,6 +14,8 @@ import {
   Label,
 } from './styles'
 import { useForm, Controller, useWatch } from 'react-hook-form'
+import { addCard } from '../../redux/slice'
+import { useAppDispatch } from '../../redux/hooks'
 
 const cardRegex = /[0-9]{4} {0,1}[0-9]{4} {0,1}[0-9]{4} {0,1}[0-9]{4}/
 
@@ -27,8 +28,7 @@ const AddCardFormSchema = z.object({
 type AddCardFormInputs = z.infer<typeof AddCardFormSchema>
 
 export function AddCard() {
-  const navigation = useNavigation()
-
+  const dispatch = useAppDispatch()
   const {
     handleSubmit,
     reset,
@@ -48,8 +48,12 @@ export function AddCard() {
   const cardId = Date.now().toString()
 
   function handleAddNewCard(data: AddCardFormInputs) {
-    console.log(data)
-    // navigation.navigate('home')
+    const cardData: CardData = {
+      ...data,
+      id: cardId,
+      flag: 'Bandeira',
+    }
+    dispatch(addCard(cardData))
 
     reset()
   }

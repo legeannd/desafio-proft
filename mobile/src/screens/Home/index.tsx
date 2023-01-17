@@ -18,6 +18,8 @@ import {
 } from './styles'
 import { Indicator } from './components/Indicator'
 import { useNavigation } from '@react-navigation/native'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { removeCard } from '../../redux/slice'
 
 type onViewableItemsChangedType = (info: {
   viewableItems: ViewToken[]
@@ -30,6 +32,7 @@ export function Home() {
     [],
   )
 
+  const dispatch = useAppDispatch()
   const navigation = useNavigation()
 
   const renderItem: ListRenderItem<CardData> = ({ item, index }) => (
@@ -38,29 +41,7 @@ export function Home() {
       isCardNumberHidden={cardNumberHiddenIndex.includes(index)}
     />
   )
-  const cards = [
-    {
-      id: '1',
-      name: 'Nome do cartão',
-      flag: 'Bandeira',
-      ownerName: 'Nome completo',
-      cardNumber: '1234 1234 1234 1234',
-    },
-    {
-      id: '2',
-      name: 'Nome do cartão 2',
-      flag: 'Bandeira',
-      ownerName: 'Nome completo',
-      cardNumber: '1234 1234 1234 1234',
-    },
-    {
-      id: '3',
-      name: 'Nome do cartão 3',
-      flag: 'Bandeira',
-      ownerName: 'Nome completo',
-      cardNumber: '1234 1234 1234 1234',
-    },
-  ]
+  const cards = useAppSelector((state) => state.cards)
 
   const onViewableItemsChanged = useCallback<onViewableItemsChangedType>(
     ({ viewableItems }) => {
@@ -85,6 +66,11 @@ export function Home() {
 
   function handleNavigateToAddCard() {
     navigation.navigate('addCard')
+  }
+
+  function handleDeleteCard() {
+    const { id } = cards[visibleCardIndex]
+    dispatch(removeCard(id))
   }
 
   return (
@@ -119,51 +105,53 @@ export function Home() {
         }}
       />
       <Indicator size={cards.length} currentIndex={visibleCardIndex} />
-      <ActionsContainer>
-        <ActionsText>Ações</ActionsText>
-        <Shadow
-          style={{ borderRadius: 10, width: '100%' }}
-          distance={8}
-          startColor="#00000009"
-          endColor={theme.white}
-        >
-          <ActionButton onPress={handleHideCardNumber}>
-            {cardNumberHiddenIndex.includes(visibleCardIndex) ? (
-              <>
-                <Ionicons
-                  name="eye-outline"
-                  size={24}
-                  color={theme['action-text']}
-                />
-                <ActionButtonText>Mostrar número</ActionButtonText>
-              </>
-            ) : (
-              <>
-                <Ionicons
-                  name="eye-off-outline"
-                  size={24}
-                  color={theme['action-text']}
-                />
-                <ActionButtonText>Esconder número</ActionButtonText>
-              </>
-            )}
-          </ActionButton>
-        </Shadow>
-        <ActionsSpacingContainer />
-        <Shadow
-          style={{ borderRadius: 10, width: '100%' }}
-          distance={8}
-          startColor="#00000009"
-          endColor={theme.white}
-        >
-          <ActionButton>
-            <Ionicons name="trash-outline" size={24} color={theme.red} />
-            <ActionButtonText style={{ color: theme.red }}>
-              Apagar cartão
-            </ActionButtonText>
-          </ActionButton>
-        </Shadow>
-      </ActionsContainer>
+      {cards.length !== 0 && (
+        <ActionsContainer>
+          <ActionsText>Ações</ActionsText>
+          <Shadow
+            style={{ borderRadius: 10, width: '100%' }}
+            distance={8}
+            startColor="#00000009"
+            endColor={theme.white}
+          >
+            <ActionButton onPress={handleHideCardNumber}>
+              {cardNumberHiddenIndex.includes(visibleCardIndex) ? (
+                <>
+                  <Ionicons
+                    name="eye-outline"
+                    size={24}
+                    color={theme['action-text']}
+                  />
+                  <ActionButtonText>Mostrar número</ActionButtonText>
+                </>
+              ) : (
+                <>
+                  <Ionicons
+                    name="eye-off-outline"
+                    size={24}
+                    color={theme['action-text']}
+                  />
+                  <ActionButtonText>Esconder número</ActionButtonText>
+                </>
+              )}
+            </ActionButton>
+          </Shadow>
+          <ActionsSpacingContainer />
+          <Shadow
+            style={{ borderRadius: 10, width: '100%' }}
+            distance={8}
+            startColor="#00000009"
+            endColor={theme.white}
+          >
+            <ActionButton onPress={handleDeleteCard}>
+              <Ionicons name="trash-outline" size={24} color={theme.red} />
+              <ActionButtonText style={{ color: theme.red }}>
+                Apagar cartão
+              </ActionButtonText>
+            </ActionButton>
+          </Shadow>
+        </ActionsContainer>
+      )}
     </HomeContainer>
   )
 }
