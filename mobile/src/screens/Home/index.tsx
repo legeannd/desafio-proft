@@ -20,7 +20,7 @@ import {
 import { Indicator } from './components/Indicator'
 import { useNavigation } from '@react-navigation/native'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { removeCard, toggleCardNumberHiddenIndex } from '../../redux/slice'
+import { removeCard, toggleCardNumberHiddenIndexId } from '../../redux/slice'
 import { EmptyCardList } from './components/EmptyCardList'
 
 type onViewableItemsChangedType = (info: {
@@ -30,14 +30,15 @@ type onViewableItemsChangedType = (info: {
 
 export function Home() {
   const [visibleCardIndex, setVisibleCardIndex] = useState(0)
+  const [visibleCardIndexId, setVisibleCardIndexId] = useState('')
 
   const dispatch = useAppDispatch()
   const navigation = useNavigation()
 
-  const renderItem: ListRenderItem<CardData> = ({ item, index }) => (
+  const renderItem: ListRenderItem<CardData> = ({ item }) => (
     <Card
       data={item}
-      isCardNumberHidden={cardNumberHiddenIndex.includes(index)}
+      isCardNumberHidden={cardNumberHiddenIndex.includes(item.id)}
     />
   )
   const cards = useAppSelector((state) => state.cards)
@@ -49,22 +50,18 @@ export function Home() {
     ({ viewableItems }) => {
       if (viewableItems.length !== 0) {
         const index = viewableItems[0].index
-        index !== null && index >= 0 && setVisibleCardIndex(index)
+        const cardId = viewableItems[0].item.id
+        if (index !== null && index >= 0 && cardId !== null) {
+          setVisibleCardIndex(index)
+          setVisibleCardIndexId(cardId)
+        }
       }
     },
     [],
   )
 
   function handleHideCardNumber() {
-    dispatch(toggleCardNumberHiddenIndex(visibleCardIndex))
-    // if (cardNumberHiddenIndex.includes(visibleCardIndex)) {
-    //   const newCardNumberHiddenIndex = cardNumberHiddenIndex.filter(
-    //     (index) => index !== visibleCardIndex,
-    //   )
-    //   setCardNumberHiddenIndex(newCardNumberHiddenIndex)
-    // } else {
-    //   setCardNumberHiddenIndex((value) => [...value, visibleCardIndex])
-    // }
+    dispatch(toggleCardNumberHiddenIndexId(visibleCardIndexId))
   }
 
   function handleNavigateToAddCard() {
@@ -120,7 +117,7 @@ export function Home() {
               endColor={theme.white}
             >
               <ActionButton onPress={handleHideCardNumber}>
-                {cardNumberHiddenIndex.includes(visibleCardIndex) ? (
+                {cardNumberHiddenIndex.includes(visibleCardIndexId) ? (
                   <>
                     <Ionicons
                       name="eye-outline"

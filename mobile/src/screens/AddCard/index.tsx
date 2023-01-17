@@ -114,6 +114,7 @@ export function AddCard() {
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  keyboardType="numbers-and-punctuation"
                   hasError={!!errors.cardNumber}
                 />
               )}

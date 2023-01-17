@@ -9,7 +9,7 @@ export interface CardData {
 }
 interface CardState {
   cards: CardData[]
-  cardNumberHiddenIndex: Number[]
+  cardNumberHiddenIndex: String[]
 }
 
 const initialState: CardState = {
@@ -33,7 +33,7 @@ export const cardSlice = createSlice({
         state.cards.splice(cardIndex, 1)
       }
     },
-    toggleCardNumberHiddenIndex: (state, action: PayloadAction<number>) => {
+    toggleCardNumberHiddenIndexId: (state, action: PayloadAction<string>) => {
       if (state.cardNumberHiddenIndex.includes(action.payload)) {
         const newCardNumberHiddenIndex = state.cardNumberHiddenIndex.filter(
           (index) => index !== action.payload,
@@ -46,6 +46,6 @@ export const cardSlice = createSlice({
   },
 })
 
-export const { addCard, removeCard, toggleCardNumberHiddenIndex } =
+export const { addCard, removeCard, toggleCardNumberHiddenIndexId } =
   cardSlice.actions
 export const cardReducer = cardSlice.reducer
