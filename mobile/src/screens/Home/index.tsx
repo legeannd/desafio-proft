@@ -20,7 +20,7 @@ import {
 import { Indicator } from './components/Indicator'
 import { useNavigation } from '@react-navigation/native'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { removeCard } from '../../redux/slice'
+import { removeCard, toggleCardNumberHiddenIndex } from '../../redux/slice'
 import { EmptyCardList } from './components/EmptyCardList'
 
 type onViewableItemsChangedType = (info: {
@@ -30,9 +30,6 @@ type onViewableItemsChangedType = (info: {
 
 export function Home() {
   const [visibleCardIndex, setVisibleCardIndex] = useState(0)
-  const [cardNumberHiddenIndex, setCardNumberHiddenIndex] = useState<Number[]>(
-    [],
-  )
 
   const dispatch = useAppDispatch()
   const navigation = useNavigation()
@@ -44,6 +41,9 @@ export function Home() {
     />
   )
   const cards = useAppSelector((state) => state.cards)
+  const cardNumberHiddenIndex = useAppSelector(
+    (state) => state.cardNumberHiddenIndex,
+  )
 
   const onViewableItemsChanged = useCallback<onViewableItemsChangedType>(
     ({ viewableItems }) => {
@@ -56,14 +56,15 @@ export function Home() {
   )
 
   function handleHideCardNumber() {
-    if (cardNumberHiddenIndex.includes(visibleCardIndex)) {
-      const newCardNumberHiddenIndex = cardNumberHiddenIndex.filter(
-        (index) => index !== visibleCardIndex,
-      )
-      setCardNumberHiddenIndex(newCardNumberHiddenIndex)
-    } else {
-      setCardNumberHiddenIndex((value) => [...value, visibleCardIndex])
-    }
+    dispatch(toggleCardNumberHiddenIndex(visibleCardIndex))
+    // if (cardNumberHiddenIndex.includes(visibleCardIndex)) {
+    //   const newCardNumberHiddenIndex = cardNumberHiddenIndex.filter(
+    //     (index) => index !== visibleCardIndex,
+    //   )
+    //   setCardNumberHiddenIndex(newCardNumberHiddenIndex)
+    // } else {
+    //   setCardNumberHiddenIndex((value) => [...value, visibleCardIndex])
+    // }
   }
 
   function handleNavigateToAddCard() {

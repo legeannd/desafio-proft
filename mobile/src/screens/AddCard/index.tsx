@@ -1,6 +1,5 @@
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { KeyboardAvoidingView, Platform } from 'react-native'
 import { Card, CardData } from '../../components/Card'
 import {
   AddCardButton,
