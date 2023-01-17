@@ -14,7 +14,7 @@ import {
   InputContainer,
   Label,
 } from './styles'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, useWatch } from 'react-hook-form'
 
 const cardRegex = /[0-9]{4} {0,1}[0-9]{4} {0,1}[0-9]{4} {0,1}[0-9]{4}/
 
@@ -43,6 +43,8 @@ export function AddCard() {
     },
   })
 
+  const { name, ownerName, cardNumber } = useWatch({ control })
+
   const cardId = Date.now().toString()
 
   function handleAddNewCard(data: AddCardFormInputs) {
@@ -63,9 +65,9 @@ export function AddCard() {
         <Card
           data={{
             id: cardId,
-            name: '',
-            cardNumber: '',
-            ownerName: '',
+            name: name || '',
+            cardNumber: cardNumber || '',
+            ownerName: ownerName || '',
             flag: 'Bandeira',
           }}
           isCardNumberHidden={false}
