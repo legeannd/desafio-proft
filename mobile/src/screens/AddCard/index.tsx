@@ -16,6 +16,7 @@ import {
 import { useForm, Controller, useWatch } from 'react-hook-form'
 import { addCard } from '../../redux/slice'
 import { useAppDispatch } from '../../redux/hooks'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const cardRegex = /[0-9]{4} {0,1}[0-9]{4} {0,1}[0-9]{4} {0,1}[0-9]{4}/
 
@@ -60,9 +61,7 @@ export function AddCard() {
 
   return (
     <AddCardContainer>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <AddCardHeaderContainer>
           <AddCardTitle>Adicionar cartão</AddCardTitle>
         </AddCardHeaderContainer>
@@ -123,7 +122,7 @@ export function AddCard() {
             />
           </InputContainer>
         </AddCardInputGroup>
-      </KeyboardAvoidingView>
+      </ScrollView>
       <AddCardButton onPress={handleSubmit(handleAddNewCard)}>
         <AddCardButtonText>Adicionar</AddCardButtonText>
       </AddCardButton>
