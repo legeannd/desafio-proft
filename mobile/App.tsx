@@ -13,7 +13,8 @@ import { StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 import { Routes } from './src/routes'
 import { Loading } from './src/components/Loading'
-import store from './src/redux/store'
+import store, { persistor } from './src/redux/store'
+import { PersistGate } from 'redux-persist/integration/react'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -31,7 +32,9 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Routes /> : <Loading />}
+      <PersistGate persistor={persistor} loading={<Loading />}>
+        {fontsLoaded ? <Routes /> : <Loading />}
+      </PersistGate>
     </Provider>
   )
 }
