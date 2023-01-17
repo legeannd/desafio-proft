@@ -9,4 +9,5 @@ export const theme = {
   'gray-700': '#383838',
   'action-text': '#2d2940',
   linear: ['#FC6767', '#EC008C'],
+  'linear-alt': ['#1488CC', '#2B32B2'],
 }

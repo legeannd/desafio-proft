@@ -35,6 +35,14 @@ export const CardsList = styled(FlatList<CardData>)`
   flex-grow: 0;
 `
 
+export const EmptyCardListContainer = styled.View`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+  flex-grow: 0;
+`
+
 export const ActionsContainer = styled.View`
   width: 100%;
   padding: 0 24px;
