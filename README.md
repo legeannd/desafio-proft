@@ -53,7 +53,7 @@ yarn start
 
 <!-- Remember to create a .env file to put the enviroment variables exemplified in the .env.example file with your personal data. -->
 
-After finishing installation, the web page will be open in your browser.
+After finishing installation, the mobile app will be open.
 
 ---
 
@@ -97,7 +97,7 @@ yarn start
 
 <!-- Lembre-se de criar um arquivo .env para colocar as variáveis de ambiente exemplificadas no arquivo .env.example com os seus dados pessoais. -->
 
-Quando terminar, a página da aplicação web será aberta no navegador.
+Quando terminar, o aplicativo mobile será aberto.
 
 ---
 ###### Developed by [Gean Lucas](https://www.linkedin.com/in/geanlucaas/) :rocket:.
